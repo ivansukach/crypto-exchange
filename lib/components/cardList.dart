@@ -16,7 +16,7 @@ class _CardListState extends State<CardList> {
     CreditCard(),
     CreditCard()
   ];
-  List<String> cardNumbers = ["5354 1234 2567 9843", "4583 1256 2941 3293", "9023 4214 3921 2394"];
+  List<String> _cardNumbers = ["5354 1234 2567 9843", "4583 1256 2941 3293", "9023 4214 3921 2394"];
   int _currentCard = 0;
 
   final PageController _pageController = PageController(initialPage: 0);
@@ -49,7 +49,7 @@ class _CardListState extends State<CardList> {
                         context,
                           MaterialPageRoute(
                               builder: (context) => AssociateCardPage(
-                                  cardId: cardNumbers[_currentCard],
+                                  cardId: _cardNumbers[_currentCard],
                               )
                           )
                       );

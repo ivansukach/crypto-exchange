@@ -2,6 +2,7 @@ import 'package:crypto_exchange/theme/themeColors.dart';
 import 'package:crypto_exchange/theme/themeStyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CreditCard extends StatefulWidget {
   @override
@@ -9,8 +10,14 @@ class CreditCard extends StatefulWidget {
 }
 
 class _CreditCardState extends State<CreditCard> {
+  bool visible = true;
+  Future<void> loadValue() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    visible = prefs.getBool("Visibility") ?? true;
+  }
   @override
   Widget build(BuildContext context) {
+    // loadValue();
     return Padding(
         padding: const EdgeInsets.all(12.0),
     child: Container(
@@ -28,7 +35,14 @@ class _CreditCardState extends State<CreditCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                 Text("11 000 \$", style: ThemeStyles.cardMoney),
-                SvgPicture.asset('assets/images/hide.svg'),
+                IconButton(
+                    icon: visible==true ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
+                  onPressed: () async {
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    prefs.setBool("Visibility", false);
+                    setState((){visible = !visible;});
+                      },
+                ),
               ])),
           Padding(
             padding: const EdgeInsets.only(

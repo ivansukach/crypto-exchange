@@ -8,8 +8,8 @@ class CryptoWallet{
 class AppState{
   var email;
   var password;
-  Map <String, List<CryptoWallet>> cards;
-  AppState({this.email, this.password, this.cards});
+  var cards;
+  AppState({email, password, cards});
   AppState.fromAnotherState(AppState another){
     email = another.email;
     password = another.password;
@@ -23,7 +23,14 @@ AppState mainReducer(AppState prevState, action){
     newState.password = action.password;
   }
   if (action is AssociateCryptoWallet) {
-    newState.cards[action.card]=newState.cards[action.card]..add(CryptoWallet(action.cryptocurrency, action.address));
+    newState.cards = new Map <String, List<CryptoWallet>>();
+    newState.cards = prevState.cards;
+    if(newState.cards[action.card].length==0) {
+      newState.cards[action.card] =
+      [CryptoWallet(action.cryptocurrency, action.address)];
+    } else {
+      newState.cards[action.card].add(CryptoWallet(action.cryptocurrency, action.address));
+    }
   }
   return newState;
 }

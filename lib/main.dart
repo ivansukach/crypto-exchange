@@ -8,7 +8,7 @@ import 'package:slide_to_confirm/slide_to_confirm.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-void main() {
+void main(){
   final _initialState = AppState(email: '', password: '');
   final Store<AppState> _store =
       Store<AppState>(mainReducer, initialState: _initialState);
