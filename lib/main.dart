@@ -2,6 +2,7 @@ import 'package:crypto_exchange/animations/opacityAnimation.dart';
 import 'package:crypto_exchange/pages/loginPage.dart';
 import 'package:crypto_exchange/store/reducers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
@@ -36,6 +37,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     //size of the current media (e.g., the window containing your app)
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;

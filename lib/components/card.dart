@@ -10,14 +10,16 @@ class CreditCard extends StatefulWidget {
 }
 
 class _CreditCardState extends State<CreditCard> {
-  bool visible = true;
-  Future<void> loadValue() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    visible = prefs.getBool("Visibility") ?? true;
+  bool visible;
+  void loadValue(){
+    SharedPreferences.getInstance().then((prefs) =>
+        setState((){visible = prefs.getBool("Visibility") ?? true;})
+    );
+
   }
   @override
   Widget build(BuildContext context) {
-    // loadValue();
+    if (visible == null) loadValue();
     return Padding(
         padding: const EdgeInsets.all(12.0),
     child: Container(
@@ -37,9 +39,9 @@ class _CreditCardState extends State<CreditCard> {
                 Text("11 000 \$", style: ThemeStyles.cardMoney),
                 IconButton(
                     icon: visible==true ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
-                  onPressed: () async {
-                    SharedPreferences prefs = await SharedPreferences.getInstance();
-                    prefs.setBool("Visibility", false);
+                  onPressed: (){
+                    SharedPreferences.getInstance().then((prefs) => prefs.setBool("Visibility", !visible));
+                    // prefs.setBool("Visibility", false);
                     setState((){visible = !visible;});
                       },
                 ),
