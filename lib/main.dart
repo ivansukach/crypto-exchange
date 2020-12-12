@@ -12,28 +12,25 @@ void main() {
   final _initialState = AppState(email: '', password: '');
   final Store<AppState> _store =
       Store<AppState>(mainReducer, initialState: _initialState);
-  runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomePage(
-          store:
-              _store))); //A convenience widget that wraps a number of widgets
+  runApp(
+      StoreProvider<AppState>(
+          store: _store,
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: HomePage()
+          )
+      )
+  ); //A convenience widget that wraps a number of widgets
   // that are commonly required for material design applications.
 }
 
 class HomePage extends StatefulWidget {
-  final Store<AppState> store;
-
-  HomePage({this.store});
-
   // This widget is the root of your application.
   @override
-  _HomePageState createState() => _HomePageState(store: store);
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  final Store<AppState> store;
-
-  _HomePageState({this.store});
 
   double buttonWidth = 80.0;
 
@@ -42,9 +39,7 @@ class _HomePageState extends State<HomePage> {
     //size of the current media (e.g., the window containing your app)
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
-    return StoreProvider<AppState>(
-        store: store,
-        child: Scaffold(
+    return Scaffold(
           //Implements the basic material design visual layout structure.
           backgroundColor: Color.fromRGBO(3, 9, 23, 1),
           body: Plasma(
@@ -102,9 +97,9 @@ class _HomePageState extends State<HomePage> {
                         children: <Widget>[
                           OpacityAnimation(
                               1.5,
-                              Text("Welcome",
+                              Center(child: Text("Welcome",
                                   style: TextStyle(
-                                      color: Colors.white, fontSize: 40))),
+                                      color: Colors.white, fontSize: 40)))),
                           Padding(
                             padding: EdgeInsets.only(bottom: height / 3),
                           ),
@@ -154,6 +149,6 @@ class _HomePageState extends State<HomePage> {
                       )),
                 ],
               ))),
-        ));
+        );
   }
 }

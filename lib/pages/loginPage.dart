@@ -5,10 +5,12 @@ import 'package:crypto_exchange/pages/bankingPage.dart';
 import 'package:crypto_exchange/animations/opacityAnimation.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:crypto_exchange/store/reducers.dart';
+import 'package:validators/validators.dart';
 
 class LoginPage extends StatelessWidget {
   final emailFieldController = TextEditingController();
   final passwordFieldController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   // final onFormSubmit =(context) {
   //   StoreProvider.of<AppState>(context).dispatch(
@@ -33,7 +35,10 @@ class LoginPage extends StatelessWidget {
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 40,
-                            fontWeight: FontWeight.bold))),
+                            fontWeight: FontWeight.bold
+                        )
+                    )
+                ),
                 SizedBox(
                   height: 30,
                 ),
@@ -44,6 +49,8 @@ class LoginPage extends StatelessWidget {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white),
+                        child: Form(
+                            key: _formKey,
                         child: Column(
                           children: <Widget>[
                             Container(
@@ -51,8 +58,14 @@ class LoginPage extends StatelessWidget {
                                   border: Border(
                                       bottom:
                                           BorderSide(color: Colors.grey[300]))),
-                              child: TextField(
+                              child: TextFormField(
+                                keyboardType: TextInputType.emailAddress,
                                 controller: emailFieldController,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                validator: (value){
+                                  if(!isEmail(value)) return "Please, enter valid email";
+                                  return null;
+                                },
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintStyle:
@@ -61,8 +74,16 @@ class LoginPage extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              child: TextField(
+                              child: TextFormField(
+                                keyboardType: TextInputType.visiblePassword,
+                                obscureText: true,
                                 controller: passwordFieldController,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                validator: (value){
+                                  if(!isAlphanumeric(value)) return "Please, use only alphanumeric symbols";
+                                  if(!isLength(value, 6, 25)) return "Please, enter from 6 to 25 symbols";
+                                  return null;
+                                },
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintStyle:
@@ -71,7 +92,7 @@ class LoginPage extends StatelessWidget {
                               ),
                             ),
                           ],
-                        ))),
+                        )))),
                 SizedBox(
                   height: 30,
                 ),
@@ -80,18 +101,20 @@ class LoginPage extends StatelessWidget {
                     Center(
                         child: FlatButton(
                       onPressed: () {
-                        StoreProvider.of<AppState>(context).dispatch(
-                            SetLoginData(emailFieldController.text,
-                                passwordFieldController.text));
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.fade,
-                                child: BankingPage()));
+                        if(_formKey.currentState.validate()) {
+                          StoreProvider.of<AppState>(context).dispatch(
+                              SetLoginData(emailFieldController.text,
+                                  passwordFieldController.text));
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.fade,
+                                  child: BankingPage()));
+                        }
                       },
                       child:
                           Text("Login", style: TextStyle(color: Colors.white)),
-                      color: Colors.indigo[700],
+                      color: Color.fromRGBO(3, 18, 36, 1),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                     )))
