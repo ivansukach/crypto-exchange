@@ -23,9 +23,13 @@ AppState mainReducer(AppState prevState, action){
     newState.password = action.password;
   }
   if (action is AssociateCryptoWallet) {
-    newState.cards = new Map <String, List<CryptoWallet>>();
-    newState.cards = prevState.cards;
-    if(newState.cards[action.card].length==0) {
+    if(newState.cards==null) {
+      newState.cards = new Map <String, List<CryptoWallet>>();
+    }
+    // else{
+    //   newState.cards = prevState.cards;
+    // }
+    if(newState.cards[action.card]==null) {
       newState.cards[action.card] =
       [CryptoWallet(action.cryptocurrency, action.address)];
     } else {

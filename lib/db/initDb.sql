@@ -1,0 +1,1 @@
+CREATE TABLE wallets(creditCard VARCHAR(16) NOT NULL, wallet VARCHAR(50) PRIMARY KEY, cryptocurrency VARCHAR(20) NOT NULL);

@@ -4,8 +4,11 @@ import 'package:crypto_exchange/components/transactionCard.dart';
 import 'package:crypto_exchange/store/actions.dart';
 import 'package:crypto_exchange/store/reducers.dart';
 import 'package:crypto_exchange/theme/themeStyles.dart';
+import 'package:crypto_exchange/db/db.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:postgres/postgres.dart';
 import 'package:smart_select/smart_select.dart';
 import 'package:validators/validators.dart';
 
@@ -30,6 +33,9 @@ class _AssociateCardPageState extends State<AssociateCardPage> {
   ];
   @override
   Widget build(BuildContext context) {
+    int insertWallet(creditCard, wallet, cryptocurrency){
+      return context.watch<WalletDatabase>().insertWallet(Wallet(creditCard: creditCard, address: wallet, cryptocurrency: cryptocurrency));
+    }
     return Scaffold(
         backgroundColor: Color.fromRGBO(3, 9, 23, 1),
         body: Column(
@@ -107,10 +113,17 @@ class _AssociateCardPageState extends State<AssociateCardPage> {
                         ),
                         Center(
                             child: FlatButton(
-                              onPressed: () {
+                              onPressed: () async{
                                 if(_formKey.currentState.validate()) {
                                   StoreProvider.of<AppState>(context).dispatch(
                                       AssociateCryptoWallet(widget.cardId, addressFieldController.text, cryptocurrency));
+                                  // var connection = PostgreSQLConnection("localhost", 5432, "crypto_exchange", username: "su", password: "su");
+                                  // await connection.open();
+                                  // connection.query("INSERT INTO wallets VALUES(@creditCard, @walletAddress, @cryptocurrency)",
+                                  // substitutionValues: {"creditCard": widget.cardId, "walletAddress": addressFieldController.text, "cryptocurrency": cryptocurrency}).then((result)=>print(result));
+
+                                  context.read<WalletDatabase>().insertWallet(Wallet(creditCard: widget.cardId, address: addressFieldController.text, cryptocurrency: cryptocurrency));
+                                  // insertWallet(widget.cardId, addressFieldController.text, cryptocurrency);
                                   Navigator.pop(
                                       context, -1);
                                 }

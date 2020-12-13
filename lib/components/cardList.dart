@@ -12,9 +12,9 @@ class CardList extends StatefulWidget {
 
 class _CardListState extends State<CardList> {
   List cardList = [
-    CreditCard(),
-    CreditCard(),
-    CreditCard()
+    CreditCard(cardId: "5354 1234 2567 9843"),
+    CreditCard(cardId: "4583 1256 2941 3293"),
+    CreditCard(cardId: "9023 4214 3921 2394")
   ];
   List<String> _cardNumbers = ["5354 1234 2567 9843", "4583 1256 2941 3293", "9023 4214 3921 2394"];
   int _currentCard = 0;

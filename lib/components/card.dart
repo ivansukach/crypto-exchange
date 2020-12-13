@@ -1,3 +1,4 @@
+import 'package:crypto_exchange/pages/cardInfoPage.dart';
 import 'package:crypto_exchange/theme/themeColors.dart';
 import 'package:crypto_exchange/theme/themeStyles.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CreditCard extends StatefulWidget {
+  final String cardId;
+
+  CreditCard({
+    this.cardId,
+  });
   @override
   _CreditCardState createState() => _CreditCardState();
 }
@@ -22,7 +28,12 @@ class _CreditCardState extends State<CreditCard> {
     if (visible == null) loadValue();
     return Padding(
         padding: const EdgeInsets.all(12.0),
-    child: Container(
+    child: InkWell(
+      onTap: (){ Navigator.push(
+          context,
+          MaterialPageRoute(
+          builder: (context) => CardInfoPage(cardId: widget.cardId)));},
+        child: Container(
       height: 200,
       width: 380,
       decoration: BoxDecoration(
@@ -81,7 +92,7 @@ class _CreditCardState extends State<CreditCard> {
 
         ],
       ),
-    ));
+    )));
   }
 }
 
