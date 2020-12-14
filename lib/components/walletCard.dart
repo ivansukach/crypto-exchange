@@ -8,12 +8,12 @@ import 'package:flutter/material.dart';
 class WalletCard extends StatefulWidget {
   final String address;
   final double balance;
-  final String pathToIcon;
+  final String cryptocurrency;
   final String rate;
   WalletCard({
     this.address,
     this.balance,
-    this.pathToIcon,
+    this.cryptocurrency,
     this.rate,
   });
   @override
@@ -26,7 +26,7 @@ class _WalletCardState extends State<WalletCard> {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 4.0),
         child: Container(
-            height: 60.0,
+            height: 70.0,
             width: 350.0,
             child: Column(
               children: [
@@ -35,11 +35,7 @@ class _WalletCardState extends State<WalletCard> {
                   children: [
                     Row(
                       children: [
-                        IconButton(
-                          onPressed: null,
-                            icon: SvgPicture.asset(widget.pathToIcon),
-                          splashRadius: 7.0,
-                        ),
+                        Image.asset("assets/images/crypto/${widget.cryptocurrency}.png", height: 30.0),
                         SizedBox(width: 16.0),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,

@@ -30,6 +30,7 @@ class _AssociateCardPageState extends State<AssociateCardPage> {
   List <S2Choice<String>> options = [
     S2Choice<String>(value: 'BTC', title: 'Bitcoin'),
     S2Choice<String>(value: 'ETH', title: 'Ethereum'),
+    S2Choice<String>(value: 'XMR', title: 'Monero'),
   ];
   @override
   Widget build(BuildContext context) {
@@ -124,6 +125,7 @@ class _AssociateCardPageState extends State<AssociateCardPage> {
 
                                   context.read<WalletDatabase>().insertWallet(Wallet(creditCard: widget.cardId, address: addressFieldController.text, cryptocurrency: cryptocurrency));
                                   // insertWallet(widget.cardId, addressFieldController.text, cryptocurrency);
+                                  print("Value inserted for credit card " + widget.cardId);
                                   Navigator.pop(
                                       context, -1);
                                 }

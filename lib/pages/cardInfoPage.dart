@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:crypto_exchange/components/card.dart';
 import 'package:crypto_exchange/components/walletCard.dart';
@@ -18,19 +19,15 @@ class CardInfoPage extends StatefulWidget {
 
 class _CardInfoPageState extends State<CardInfoPage> {
   var associatedWallets;
+  Future<double> getPrice(String symbol) async {
+    return http
+        .get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=$symbol',headers: {"X-CMC_PRO_API_KEY": "27d4aacb-1ad0-471e-888b-33ea0da458dd"})
+        .then((response) => jsonDecode(response.body)).then((value) => value["data"][symbol]["quote"]["USD"]["price"]);
+  }
   @override
   Widget build(BuildContext context) {
-    var moneroRate;
-    var bitcoinRate;
-    var ethereumRate;
-    http
-        .get('https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?slug=monero')
-        .then((response) => jsonDecode(response.body)).then((value) => moneroRate = value["data"]["328"]["quote"]["USD"]["price"]);
-    http
-        .get('https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?slug=bitcoin')
-        .then((response) => jsonDecode(response.body)).then((value) => bitcoinRate = value["data"]["1"]["quote"]["USD"]["price"]);
-
-        // .then((response) => {wallets = response}).then((value)=>{print(wallets)});
+    print(widget.cardId);
+    getPrice("ETH").then((value) => print(value));
     return Scaffold(
         backgroundColor: Color.fromRGBO(3, 9, 23, 1),
         body: Column(children: [
@@ -42,22 +39,24 @@ class _CardInfoPageState extends State<CardInfoPage> {
               child: FutureBuilder<List<Wallet>>(
                 future: context.watch<WalletDatabase>().wallets(widget.cardId),
                 builder: (context, snapshot) {
-                  // if(snapshot.connectionState != ConnectionState.done){
-                  //   return Text("Loading wallets");
-                  // }
-                  // e
-                  // return Text(snapshot.data);
-                  if(snapshot.data != null) {
+                  if(snapshot.data != null && snapshot.data.isNotEmpty) {
+                    var rng = new Random();
                     return ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
                         itemCount: snapshot.data.length,
                         itemBuilder: (context, index) {
                           final wallet = snapshot.data[index];
 
-                          return WalletCard(
-                              address: "address",
-                              balance: 200.22,
-                              pathToIcon: "assets/images/cryptocurrencies/bitcoin.svg",
-                              rate: "303\$");
+                          return FutureBuilder<double>(
+                          future: getPrice(wallet.cryptocurrency),
+                          builder: (context, snapshot) {
+                            return WalletCard(
+                              address: wallet.address,
+                              balance: rng.nextDouble()*10000,
+                              cryptocurrency: wallet.cryptocurrency,
+                              rate: snapshot.data.toString());
+                          });
                         }
                     );
                   } else {
@@ -65,33 +64,6 @@ class _CardInfoPageState extends State<CardInfoPage> {
                   }
                 }
               )
-              // Consumer<WalletDatabase>(
-              //   builder: (context, database, child){
-              //     // return database.wallets("1111").then((wallets)=> Text(wallets.length.toString(), style: TextStyle(color: Colors.white)));
-              //     database.wallets("1111").then((wallets)=> associatedWallets = wallets);
-              //     // return ListView.builder(
-              //     //   itemCount: wallets.length,
-              //     //   itemBuilder: (context, index){
-              //     //     final wallet = wallets[index];
-              //     //
-              //     //     return WalletCard(
-              //     //       address: "address",
-              //     //       balance: 200.22,
-              //     //       pathToIcon: "assets/images/cryptocurrencies/bitcoin.svg",
-              //     //       rate: "303\$");
-              //     //   }
-              //     // );
-              //     return Text("Example", style: TextStyle(color: Colors.white));
-              //   },
-              // )
-              // ListView.builder(
-              //   itemCount: wallets.length,
-              //   itemBuilder: (context, index){
-              //     final wallet = wallets[index];
-              //
-              //     return wallet;
-              //   }
-              // )
           ),
 
         ]));

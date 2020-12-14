@@ -32,7 +32,8 @@ class _CreditCardState extends State<CreditCard> {
       onTap: (){ Navigator.push(
           context,
           MaterialPageRoute(
-          builder: (context) => CardInfoPage(cardId: widget.cardId)));},
+          builder: (context) => CardInfoPage(cardId: widget.cardId)));
+      print("CARD ID"+widget.cardId);},
         child: Container(
       height: 200,
       width: 380,

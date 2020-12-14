@@ -76,7 +76,7 @@ class _CardListState extends State<CardList> {
               scrollDirection: Axis.horizontal,
               controller: _pageController,
               onPageChanged: _onPageChanged,
-              itemBuilder: (context, index) => CreditCard(),
+              itemBuilder: (context, index) => CreditCard(cardId: _cardNumbers[index]),
             )
           ),
           Padding(
