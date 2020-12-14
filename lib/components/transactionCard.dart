@@ -1,6 +1,4 @@
 import 'package:crypto_exchange/pages/transactionPage.dart';
-import 'package:crypto_exchange/theme/themeColors.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:crypto_exchange/theme/themeStyles.dart';
 import 'package:flutter/material.dart';
 

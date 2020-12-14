@@ -37,6 +37,7 @@ class _AssociateCardPageState extends State<AssociateCardPage> {
     int insertWallet(creditCard, wallet, cryptocurrency){
       return context.watch<WalletDatabase>().insertWallet(Wallet(creditCard: creditCard, address: wallet, cryptocurrency: cryptocurrency));
     }
+    print("Associate card page");
     return Scaffold(
         backgroundColor: Color.fromRGBO(3, 9, 23, 1),
         body: Column(

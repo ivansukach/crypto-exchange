@@ -17,18 +17,18 @@ class AppState{
   }
 }
 AppState mainReducer(AppState prevState, action){
+  print("MAIN REDUCER");
   AppState newState = AppState.fromAnotherState(prevState);
   if (action is SetLoginData) {
+    print("ACTION: SetLoginData");
     newState.email = action.email;
     newState.password = action.password;
   }
   if (action is AssociateCryptoWallet) {
+    print("ACTION: AssociateCryptoWallet");
     if(newState.cards==null) {
       newState.cards = new Map <String, List<CryptoWallet>>();
     }
-    // else{
-    //   newState.cards = prevState.cards;
-    // }
     if(newState.cards[action.card]==null) {
       newState.cards[action.card] =
       [CryptoWallet(action.cryptocurrency, action.address)];

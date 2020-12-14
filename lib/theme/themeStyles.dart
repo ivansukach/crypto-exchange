@@ -1,4 +1,3 @@
-import 'package:crypto_exchange/theme/themeColors.dart';
 import 'package:flutter/material.dart';
 
 class ThemeStyles {
@@ -20,11 +19,6 @@ class ThemeStyles {
     color: Colors.white,
     fontSize: 22.0,
     fontWeight: FontWeight.w700,
-  );
-  static TextStyle tagText = TextStyle(
-    fontStyle: FontStyle.italic,
-    color: Colors.white,
-    fontWeight: FontWeight.w500,
   );
   static TextStyle otherDetailsPrimary = TextStyle(
     fontSize: 16.0,

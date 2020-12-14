@@ -22,6 +22,7 @@ class _BankingPageState extends State<BankingPage> {
         selectedIndex = index;
       });
     }
+    print("Banking page");
     return Scaffold(
         backgroundColor: Color.fromRGBO(3, 9, 23, 1),
         body: widgetOptions.elementAt(selectedIndex),

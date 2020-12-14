@@ -28,7 +28,9 @@ class _RecentTransactionsState extends State<RecentTransactions> {
               ],
             ),
           ),
-          Flexible(
+    // Padding(
+    // padding: EdgeInsets.only(top: 30), child:
+    Flexible(
             flex: 1,//flex-factor
             child: ListView(
               shrinkWrap: true,

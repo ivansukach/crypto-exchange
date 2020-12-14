@@ -1,5 +1,4 @@
 import 'package:crypto_exchange/pages/associateCardPage.dart';
-import 'package:crypto_exchange/theme/themeColors.dart';
 import 'package:crypto_exchange/theme/themeStyles.dart';
 import 'package:flutter/material.dart';
 

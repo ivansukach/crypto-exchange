@@ -1,6 +1,5 @@
 import 'package:crypto_exchange/store/actions.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:crypto_exchange/pages/bankingPage.dart';
 import 'package:crypto_exchange/animations/opacityAnimation.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -21,6 +20,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Login page");
     return Scaffold(
         backgroundColor: Color.fromRGBO(3, 9, 23, 1),
         body: Container(
@@ -102,14 +102,14 @@ class LoginPage extends StatelessWidget {
                         child: FlatButton(
                       onPressed: () {
                         if(_formKey.currentState.validate()) {
+                          print("LOGGED IN");
                           StoreProvider.of<AppState>(context).dispatch(
                               SetLoginData(emailFieldController.text,
                                   passwordFieldController.text));
                           Navigator.push(
                               context,
-                              PageTransition(
-                                  type: PageTransitionType.fade,
-                                  child: BankingPage()));
+                              MaterialPageRoute(
+                              builder: (context) => BankingPage()));
                         }
                       },
                       child:

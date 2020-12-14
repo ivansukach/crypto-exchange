@@ -4,7 +4,6 @@ import 'package:crypto_exchange/pages/loginPage.dart';
 import 'package:crypto_exchange/store/reducers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
@@ -115,11 +114,11 @@ class _HomePageState extends State<HomePage> {
                               //   icon: Icons.arrow_forward,
                               text: "swipe to start",
                               onConfirmation: () {
+                                print("CONFIRMED");
                                 Navigator.push(
                                     context,
-                                    PageTransition(
-                                        type: PageTransitionType.fade,
-                                        child: LoginPage()));
+                                    MaterialPageRoute(
+                                    builder: (context) => LoginPage()));
                               })
                           //   child: AnimatedContainer(
                           //         width: buttonWidth,

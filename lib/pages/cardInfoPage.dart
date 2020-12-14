@@ -26,17 +26,18 @@ class _CardInfoPageState extends State<CardInfoPage> {
   }
   @override
   Widget build(BuildContext context) {
+    print("CardInfo page");
     print(widget.cardId);
     getPrice("ETH").then((value) => print(value));
     return Scaffold(
         backgroundColor: Color.fromRGBO(3, 9, 23, 1),
-        body: Column(children: [
+        body: Column(
+            children: [
           Padding(
               padding: EdgeInsets.only(top: 30),
               child: Container(height: 250, child: CreditCard())),
-          Padding(
-              padding: EdgeInsets.only(top: 30),
-              child: FutureBuilder<List<Wallet>>(
+          Flexible(
+                flex: 1, child: FutureBuilder<List<Wallet>>(
                 future: context.watch<WalletDatabase>().wallets(widget.cardId),
                 builder: (context, snapshot) {
                   if(snapshot.data != null && snapshot.data.isNotEmpty) {
@@ -63,9 +64,9 @@ class _CardInfoPageState extends State<CardInfoPage> {
                     return Text("You haven't got any associated wallets", style: TextStyle(color: Colors.white));
                   }
                 }
-              )
-          ),
+              ))
+    ])
 
-        ]));
+        );
   }
 }

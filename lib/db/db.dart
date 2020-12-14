@@ -44,6 +44,7 @@ Future<WalletDatabase> initializeDb() async {
     version: 1,
   );
   Future<void> insertWallet(Wallet wallet) async {
+    print("INSERT WALLET");
     // Get a reference to the database.
     final Database db = database;
 
@@ -58,6 +59,7 @@ Future<WalletDatabase> initializeDb() async {
     );
   }
   Future<List<Wallet>> wallets(String creditCardId) async {
+    print("LIST WALLETS");
     // Get a reference to the database.
     final Database db = database;
 
